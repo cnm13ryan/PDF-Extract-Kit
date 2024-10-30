@@ -1,34 +1,48 @@
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "pdf-extract-kit"
-version = "0.1.0"
-authors = [
-    { name="Bin Wang", email="ictwangbin@gmail.com" }
-]
-description = "A Comprehensive Toolkit for High-Quality PDF Content Extraction."
-readme = "README.md"
-license = { file="LICENSE" }
-requires-python = ">=3.10"
+name = "PDF-Extract-Kit"
+version = "0.0.1"
+description = "Convert math textbook pages to latex"
+requires-python = ">=3.10,<4.0"
+
 dependencies = [
-    "PyPDF2",
+    "setuptools",
+    "omegaconf",
     "matplotlib",
-    "pyyaml",
-    "frontend",
-    "pymupdf",
-    opencv-python = "^4.6.0"
-    # Add other common dependencies
+    "PyMuPDF",
+    "ultralytics>=8.2.85",
+    "doclayout-yolo==0.0.2",
+    "unimernet==0.2.1",
+    "paddlepaddle-gpu",
+    "paddleocr==2.7.3",
+    "struct-eqtable",
+    "lmdeploy",
+    "torch == 2.3.1+cu121",
+    "torchvision == 0.18.1+cu121",
 ]
 
-[project.optional-dependencies]
-layout_detection = [
-    "transformers",  # for layoutlmv3
-    # Add other dependencies for layout detection
+[tool.pdm]
+
+[[tool.pdm.source]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+include_packages = ["torch", "torchvision"]
+exclude_packages = ["*"]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff >= 0.7.0",
 ]
-formula_detection = [
-    "ultralytics",  # for yolov8
-    # Add other dependencies for formula detection
+
+
+test = [
+    "pytest<9.0.0,>=8.3.3",
+    "pytest-mock<4.0.0,>=3.14.0"
 ]
-# Add additional dependencies for other models
+
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pyright]
+reportCallIssue = "none"
